@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" class="flex justify-center">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes App</title>
+    <meta name="description" content="Simple Notes App">
+    <meta name="theme-color" content="#000343">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png">
+    <link rel="manifest" href="../site.webmanifest">
+    <link rel="mask-icon" href="../images/safari-pinned-tab.svg" color="#3c9de2">
+    <meta name="msapplication-TileColor" content="#262626">
+</head>
+
+<body class="flex flex-col p-5 bg-indigo-950 w-full md:w-10/12 lg:w-7/12 gap-5">
+    <header class="flex flex-row justify-between items-center">
+        <h1 id="page-title" class="text-2xl font-bold ">Notes App</h1>
+        <div id="header-icons" class="flex flex-row gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" id="plus-icon" class="w-8 h-8 md:w-7 md:h-7 transition ease-in-out icon cursor-pointer">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" id="settings-icon" class="w-8 h-8 md:w-7 md:h-7 transition ease-in-out icon cursor-pointer">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" id="close-icon" class="w-8 h-8 md:w-7 md:h-7 hidden transition ease-in-out icon cursor-pointer" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              
+        </div>
+    </header>
+    <main>
+        <section id="settings-panel" class="flex flex-col gap-2 p-2.5 hidden rounded-lg bg-[#333560] drop-shadow-sm">
+            <div class="settings-group flex flex-row flex-wrap grow gap-4 items-center">
+                <h2 class="text-md font-bold">Accent Colour</h2>
+                <input type="color" id="accent-colour" class="rounded-md cursor-pointer w-full" name="accent-colour" value="#eeeeee">
+            </div>
+        </section>
+        <section id="main-content" class="flex flex-col gap-5 rounded-lg">
+            <div id="search-bar" class="flex flex-row justify-between items-center gap-2">
+                <input type="text" id="search-input" class="w-full p-2.5 text-md rounded-md bg-[#333560] font-bold focus:outline-0 hover:bg-[#3F4278] transition ease-in-out drop-shadow-sm" placeholder="Search">
+            </div>
+
+            <div id="notes-list-container" class="flex flex-col  gap-5">
+                <div id="notes-list" class="flex flex-col gap-2.5 rounded-md">
+                </div>
+                <p id="number-of-notes" class="text-sm text-center text-gray-400"></p>
+            </div>
+
+            <div id="add-note-form" class="flex flex-col gap-2.5 hidden">
+                <input type="text" id="note-title-input" class="w-full p-2.5 text-md rounded-md bg-[#333560] drop-shadow-sm font-bold focus:outline-0 hover:bg-[#3F4278] transition ease-in-out" placeholder="Note Title">
+                <textarea id="note-content-input" rows="10" class="w-full p-2.5 text-md rounded-md bg-[#333560] drop-shadow-sm resize-none focus:outline-0 hover:bg-[#3F4278] transition ease-in-out" placeholder="Note Content"></textarea>
+                <div class="flex flex-row justify-between items-center gap-2.5">
+                    <button id="cancel-button" class="w-1/2 p-2.5 text-md rounded-md bg-[#333560] font-bold focus:outline-0 hover:bg-[#3F4278] drop-shadow-sm transition ease-in-out">Cancel</button>
+                    <button id="save-button" class="w-1/2 p-2.5 text-md rounded-md bg-[#333560] font-bold focus:outline-0 hover:bg-[#3F4278] drop-shadow-sm transition ease-in-out">Save</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+    </footer>
+    <script src="core.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>
