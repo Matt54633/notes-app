@@ -15,6 +15,13 @@
     <link rel="manifest" href="../site.webmanifest">
     <link rel="mask-icon" href="../images/safari-pinned-tab.svg" color="#3c9de2">
     <meta name="msapplication-TileColor" content="#262626">
+    <script>
+        tailwind.config = {
+            future: {
+                hoverOnlyWhenSupported: true,
+            }
+        }
+    </script>
 </head>
 
 <body class="flex flex-col p-5 bg-indigo-950 w-full md:w-10/12 lg:w-6/12 gap-5">
@@ -43,12 +50,18 @@
         </div>
     </header>
     <main>
-        <section id="settings-panel" class="flex flex-col gap-2 p-4 hidden rounded-lg bg-[#333560] drop-shadow-sm">
-            <div class="settings-group flex flex-row flex-wrap grow gap-4 items-center justify-between">
-                <h2 class="text-md font-bold">Accent Colour</h2>
+        <section id="settings-panel" class="flex flex-col gap-2.5 hidden">
+            <div class="settings-group flex flex-col flex-wrap grow gap-4 rounded-lg p-4 justify-between bg-[#333560] hover:bg-[#3F4278] transition ease-in-out drop-shadow-sm">
+                <h2 class="text-md font-bold">General</h2>
+                <p class="text-sm">Note data is saved to the local storage of your web browser, as is your chosen accent colour.</p>
+            </div>
+            <div class="settings-group flex flex-row flex-wrap grow gap-4 rounded-lg  p-4 items-center justify-between bg-[#333560] hover:bg-[#3F4278] transition ease-in-out drop-shadow-sm">
+                <h2 class="text-md font-bold">Text Colour</h2>
                 <input type="color" id="accent-colour" class="rounded-full cursor-pointer h-8 w-8" name="accent-colour"
                     value="#eeeeee">
             </div>
+            <button id="delete-all-notes-button"
+                    class="w-full p-2.5 text-md rounded-md bg-indigo-600 drop-shadow-sm font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 hover:bg-indigo-500 transition ease-in-out">Delete All Notes</button>
         </section>
         <section id="main-content" class="flex flex-col gap-5 rounded-lg">
             <div id="search-bar" class="flex flex-row justify-between items-center gap-2 relative">

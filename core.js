@@ -14,6 +14,7 @@ window.addEventListener("load", function () {
     }
     // get current accent colour
     current_accent_colour = localStorage.getItem("accent_colour");
+    accent_colour_picker.value = current_accent_colour;
 });
 
 // icons interation
