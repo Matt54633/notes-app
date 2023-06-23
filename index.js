@@ -34,7 +34,7 @@ settings_icon.addEventListener("click", function () {
 });
 
 close_icon.addEventListener("click", function () {
-    document.getElementById('page-title').innerText = 'Notes App';
+    document.getElementById('page-title').innerText = 'Notes';
     if (plus_icon != null) {
         plus_icon.classList.remove("hidden");
     }
