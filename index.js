@@ -1,4 +1,9 @@
 // add on click to all .icon elements
+const plus_icon = document.getElementById("plus-icon");
+const settings_icon = document.getElementById("settings-icon");
+const close_icon = document.getElementById("close-icon");
+const settings_panel = document.getElementById("settings-panel");
+const search_bar_div = document.getElementById("search-bar");
 const search = document.getElementById("search-input");
 const notes_list_container = document.getElementById("notes-list-container");
 const notes_list = document.getElementById("notes-list");
@@ -7,22 +12,44 @@ const cancel_button = document.getElementById("cancel-button");
 const save_button = document.getElementById("save-button");
 let number_of_notes = document.querySelectorAll(".note").length;
 
-
 window.addEventListener("load", function () {
+    accent_colour_picker.value = current_accent_colour;
     document.getElementById('number-of-notes').innerText = `${number_of_notes} note(s)`;
-
     display_notes();
 });
 
+// settings panel controls
+settings_icon.addEventListener("click", function () {
+    document.getElementById('page-title').innerText = 'Settings';
+    if (plus_icon != null) {
+        plus_icon.classList.add("hidden");
+    }
+    settings_icon.classList.add("hidden");
+    main_content.classList.add("hidden");
+    close_icon.classList.remove("hidden");
+    settings_panel.classList.remove("hidden");
+});
+
+close_icon.addEventListener("click", function () {
+    document.getElementById('page-title').innerText = 'Notes App';
+    if (plus_icon != null) {
+        plus_icon.classList.remove("hidden");
+    }
+    settings_icon.classList.remove("hidden");
+    main_content.classList.remove("hidden");
+    close_icon.classList.add("hidden");
+    settings_panel.classList.add("hidden");
+});
+
 plus_icon.addEventListener("click", function () {
-    search.classList.add("hidden");
+    search_bar_div.classList.add("hidden");
     notes_list_container.classList.add("hidden");
     plus_icon.classList.add("hidden");
     add_note_form.classList.remove("hidden");
 });
 
 cancel_button.addEventListener("click", function () {
-    search.classList.remove("hidden");
+    search_bar_div.classList.remove("hidden");
     notes_list_container.classList.remove("hidden");
     plus_icon.classList.remove("hidden");
     add_note_form.classList.add("hidden");
@@ -38,6 +65,11 @@ search.addEventListener("keyup", function () {
     search_items();
 });
 
+// accent colour picker
+accent_colour_picker.addEventListener("change", function () {
+    get_accent_colour();
+});
+
 function add_note() {
     if (document.getElementById("note-title-input").value == "") {
         document.getElementById("note-title-input").placeholder = "Please enter a title";
@@ -51,8 +83,6 @@ function add_note() {
         return;
     }
     else {
-        document.getElementById("note-title-input").classList.remove("border-red-500");
-
         let note_data = [document.getElementById("note-title-input").value, document.getElementById("note-content-input").value];
 
         // save note to local storage
@@ -64,7 +94,7 @@ function add_note() {
         localStorage.setItem("notes", JSON.stringify(notes));
 
         add_note_form.classList.add("hidden");
-        search.classList.remove("hidden");
+        search_bar_div.classList.remove("hidden");
         notes_list_container.classList.remove("hidden");
         plus_icon.classList.remove("hidden");
 
@@ -99,9 +129,7 @@ function display_notes() {
 
         // add on click to note to open note
         note.addEventListener("click", function () {
-            // save note data to local storage
             localStorage.setItem("current_note", JSON.stringify(note_data));
-            // open note
             window.location.href = "note.html";
         });
 
