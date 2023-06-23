@@ -73,6 +73,7 @@ delete_all_notes_button.addEventListener("click", function () {
     main_content.classList.remove("hidden");
     settings_icon.classList.remove("hidden");
     plus_icon.classList.remove("hidden");
+    document.getElementById('page-title').innerText = 'Notes';
 });
 
 search.addEventListener("keyup", function () {
