@@ -49,6 +49,7 @@ close_icon.addEventListener("click", function () {
 
 plus_icon.addEventListener("click", function () {
     page_title.innerText = "Add Note";
+    settings_icon.classList.add("hidden");
     search_bar_div.classList.add("hidden");
     notes_list_container.classList.add("hidden");
     plus_icon.classList.add("hidden");
@@ -57,6 +58,7 @@ plus_icon.addEventListener("click", function () {
 
 cancel_button.addEventListener("click", function () {
     page_title.innerText = "Notes";
+    settings_icon.classList.remove("hidden");
     search_bar_div.classList.remove("hidden");
     notes_list_container.classList.remove("hidden");
     plus_icon.classList.remove("hidden");
@@ -119,6 +121,7 @@ async function add_note() {
 
         add_note_form.classList.add("hidden");
         search_bar_div.classList.remove("hidden");
+        settings_icon.classList.remove("hidden");
         notes_list_container.classList.remove("hidden");
         plus_icon.classList.remove("hidden");
 
