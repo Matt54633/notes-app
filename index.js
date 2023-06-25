@@ -1,4 +1,5 @@
 // add on click to all .icon elements
+const page_title = document.getElementById("page-title");
 const plus_icon = document.getElementById("plus-icon");
 const settings_icon = document.getElementById("settings-icon");
 const close_icon = document.getElementById("close-icon");
@@ -13,9 +14,11 @@ const note_content_input = document.getElementById("note-content-input");
 const cancel_button = document.getElementById("cancel-button");
 const save_button = document.getElementById("save-button");
 const delete_all_notes_button = document.getElementById("delete-all-notes-button");
+const logout_button = document.getElementById("logout-button");
 let number_of_notes = document.querySelectorAll(".note").length;
 
 window.addEventListener("load", function () {
+    localStorage.removeItem("current_note");
     accent_colour_picker.value = current_accent_colour;
     document.getElementById('number-of-notes').innerText = `${number_of_notes} note(s)`;
     display_notes();
@@ -45,6 +48,7 @@ close_icon.addEventListener("click", function () {
 });
 
 plus_icon.addEventListener("click", function () {
+    page_title.innerText = "Add Note";
     search_bar_div.classList.add("hidden");
     notes_list_container.classList.add("hidden");
     plus_icon.classList.add("hidden");
@@ -52,6 +56,7 @@ plus_icon.addEventListener("click", function () {
 });
 
 cancel_button.addEventListener("click", function () {
+    page_title.innerText = "Notes";
     search_bar_div.classList.remove("hidden");
     notes_list_container.classList.remove("hidden");
     plus_icon.classList.remove("hidden");
@@ -66,14 +71,18 @@ save_button.addEventListener("click", function () {
 });
 
 delete_all_notes_button.addEventListener("click", function () {
-    localStorage.removeItem("notes");
-    display_notes();
+    delete_all_notes();
     settings_panel.classList.add("hidden");
     close_icon.classList.add("hidden");
     main_content.classList.remove("hidden");
     settings_icon.classList.remove("hidden");
     plus_icon.classList.remove("hidden");
     document.getElementById('page-title').innerText = 'Notes';
+});
+
+logout_button.addEventListener("click", async function () {
+    const { error } = await supabase_client.auth.signOut();
+    window.location.href = "login.html";
 });
 
 search.addEventListener("keyup", function () {
@@ -85,7 +94,7 @@ accent_colour_picker.addEventListener("change", function () {
 
 });
 
-function add_note() {
+async function add_note() {
     if (note_title_input.value == "") {
         note_title_input.placeholder = "Please enter a title";
         return;
@@ -100,13 +109,13 @@ function add_note() {
     else {
         let note_data = [note_title_input.value, note_content_input.value];
 
-        // save note to local storage
-        let notes = JSON.parse(localStorage.getItem("notes"));
-        if (notes == null) {
-            notes = [];
-        }
-        notes.push(note_data);
-        localStorage.setItem("notes", JSON.stringify(notes));
+        const { data: { user } } = await supabase_client.auth.getUser()
+
+        const { data, error } = await supabase_client
+            .from('notes')
+            .insert([
+                { note_title: note_data[0], note_content: note_data[1], user_id: user.id },
+            ])
 
         add_note_form.classList.add("hidden");
         search_bar_div.classList.remove("hidden");
@@ -115,17 +124,19 @@ function add_note() {
 
         note_title_input.value = "";
         note_content_input.value = "";
+        page_title.innerText = "Notes";
 
         display_notes();
     }
 }
 
-function display_notes() {
-    // clear notes list
+async function display_notes() {
     notes_list.innerHTML = "";
 
     // for each note in local storage, create a note
-    let notes = JSON.parse(localStorage.getItem("notes"));
+    const { data, error } = await supabase_client.from('notes').select('*')
+    let notes = data;
+
     if (notes == null) {
         notes = [];
     }
@@ -142,8 +153,8 @@ function display_notes() {
         note.classList.add("drop-shadow-sm");
 
         note.innerHTML = `
-        <h2 class="note-title text-md font-bold">${note_data[0]}</h2>
-        <p class="note-content text-sm">${note_data[1]}</p>`;
+        <h2 class="note-title text-md font-bold">${note_data.note_title}</h2>
+        <p class="note-content text-sm">${note_data.note_content}</p>`;
 
         // add on click to note to open note
         note.addEventListener("click", function () {
@@ -177,8 +188,19 @@ function search_items() {
     // set no notes text to number of matching notes
     if (input != "") {
         let matching_notes = document.querySelectorAll(".note:not([style='display: none;'])").length;
-        document.getElementById('number-of-notes').innerText = `${matching_notes} note(s) matching`;
+        document.getElementById('number-of-notes').innerText = `${matching_notes} matching`;
     } else {
         document.getElementById('number-of-notes').innerText = `${number_of_notes} note(s)`;
     }
+}
+
+async function delete_all_notes() {
+    const { data: { user } } = await supabase_client.auth.getUser()
+
+    const { data, error } = await supabase_client
+        .from('notes')
+        .delete()
+        .eq('user_id', user.id)
+
+    display_notes();
 }

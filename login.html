@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" class="flex justify-center content-center h-[100svh]">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes App</title>
+    <meta name="description" content="Simple Notes App">
+    <meta name="theme-color" content="#1e1b4b">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16.png">
+    <link rel="manifest" href="../site.webmanifest">
+    <link rel="mask-icon" href="../images/safari-pinned-tab.svg" color="#3c9de2">
+    <meta name="msapplication-TileColor" content="#262626">
+    <script>
+        tailwind.config = {
+            future: {
+                hoverOnlyWhenSupported: true,
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body class="flex flex-col flex-wrap p-5 bg-indigo-950 w-full md:w-10/12 lg:w-6/12 gap-5 justify-center content-center">
+    <header class="flex flex-row justify-center">
+        <h1 id="page-title" class="text-2xl font-bold">Notes</h1>
+    </header>
+    <main>
+        <section id="main-content" class="flex flex-col gap-5 rounded-lg">
+            <input type="text" id="email-input"
+                class="w-full p-2.5 text-md rounded-md drop-shadow-sm bg-[#333560] font-bold focus:outline-0 hover:bg-[#3F4278] transition ease-in-out"
+                placeholder="Username">
+            <input type="password" id="password-input"
+                class="w-full p-2.5 text-md rounded-md drop-shadow-sm bg-[#333560] font-bold focus:outline-0 hover:bg-[#3F4278] transition ease-in-out"
+                placeholder="Password">
+            <button id="login-button"
+                class="w-full py-2.5 text-md rounded-md bg-indigo-600 drop-shadow-sm font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 hover:bg-indigo-500 transition ease-in-out">Login</button>
+            <div class="flex flex-row gap-2">
+                <button id="cancel-button"
+                    class="w-full py-2.5 text-md rounded-md bg-[#333560] drop-shadow-sm font-bold focus:outline-0 hover:bg-[#3F4278] transition ease-in-out hidden">Cancel</button>
+                <button id="signup-button"
+                    class="w-full py-2.5 text-md rounded-md bg-indigo-600 drop-shadow-sm font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 hover:bg-indigo-500 transition ease-in-out hidden">Sign
+                    up</button>
+            </div>
+            <p id="signup-text" class="text-sm text-center">Don't have an account? <a id="signup-link"
+                    class="text-indigo-600 hover:underline">Sign up</a></p>
+        </section>
+    </main>
+    <footer>
+    </footer>
+    <script src="core.js"></script>
+    <script type="module" src="login.js"></script>
+</body>
+
+</html>
