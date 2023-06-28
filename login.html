@@ -25,7 +25,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
-<body class="flex flex-col flex-wrap p-5 bg-indigo-950 w-full md:w-10/12 lg:w-7/12 gap-5 justify-center content-center">
+<body class="flex flex-col flex-wrap p-5 bg-indigo-950 w-full md:w-10/12 lg:w-8/12 xl:w-6/12 gap-5 justify-center content-center">
     <header class="flex flex-row justify-center">
         <h1 id="page-title" class="text-2xl font-bold">Notes</h1>
     </header>
@@ -38,20 +38,16 @@
                 class="w-full p-2.5 text-md rounded-md drop-shadow-sm bg-[#333560] font-bold focus:outline-0 hover:bg-[#3F4278] transition ease-in-out"
                 placeholder="Password">
             <button id="login-button"
-                class="w-full py-2.5 text-md rounded-md bg-indigo-600 drop-shadow-sm font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 hover:bg-indigo-500 transition ease-in-out">Login</button>
-            <div class="flex flex-row gap-2">
-                <button id="cancel-button"
-                    class="w-full py-2.5 text-md rounded-md bg-[#333560] drop-shadow-sm font-bold focus:outline-0 hover:bg-[#3F4278] transition ease-in-out hidden">Cancel</button>
-                <button id="signup-button"
-                    class="w-full py-2.5 text-md rounded-md bg-indigo-600 drop-shadow-sm font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 hover:bg-indigo-500 transition ease-in-out hidden">Sign
-                    up</button>
-            </div>
-            <p id="signup-text" class="text-sm text-center">Don't have an account? <a id="signup-link"
+                class="login_element w-full py-2.5 text-md rounded-md bg-indigo-600 drop-shadow-sm font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 hover:bg-indigo-500 transition ease-in-out">Login</button>
+            <button id="signup-button"
+                class="signup_element hidden w-full py-2.5 text-md rounded-md bg-indigo-600 drop-shadow-sm font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 hover:bg-indigo-500 transition ease-in-out hidden">Sign
+                up</button>
+            <p id="signup-text" class="login_element text-sm text-center">Don't have an account? <a id="signup-link"
                     class="text-indigo-300 font-bold hover:underline cursor-pointer">Sign up</a></p>
+            <p id="login-text" class="signup_element text-sm text-center hidden">Already have an account? <a
+                    id="login-link" class="text-indigo-300 font-bold hover:underline cursor-pointer">Login</a></p>
         </section>
     </main>
-    <footer>
-    </footer>
     <script src="core.js"></script>
     <script type="module" src="login.js"></script>
 </body>

@@ -25,12 +25,22 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
-<body class="flex flex-col p-5 bg-indigo-950 w-full md:w-10/12 lg:w-6/12 gap-5">
+<body class="flex flex-col p-5 bg-indigo-950 w-full md:w-10/12 lg:w-8/12 xl:w-6/12 gap-5">
     <header class="flex flex-row justify-between items-center">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
             id="back-icon" class="w-8 h-8 md:w-7 md:h-7 transition ease-in-out icon cursor-pointer">
             <path stroke-linecap="round" stroke-linejoin="round"
                 d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+            id="light-icon" class="w-8 h-8 md:w-7 md:h-7 transition ease-in-out icon cursor-pointer">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+            id="share-icon" class="w-8 h-8 md:w-7 md:h-7 transition ease-in-out icon cursor-pointer">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15m0-3l-3-3m0 0l-3 3m3-3V15" />
         </svg>
     </header>
     <main>
@@ -40,7 +50,7 @@
                     class="w-full p-2.5 text-md rounded-md drop-shadow-sm bg-[#333560] font-bold focus:outline-0 hover:bg-[#3F4278] transition ease-in-out"
                     placeholder="Note Title">
                 <textarea id="note-content-input" rows="10"
-                    class="w-full p-2.5 text-sm rounded-md drop-shadow-sm bg-[#333560] resize-none focus:outline-0 hover:bg-[#3F4278] transition ease-in-out"
+                    class="w-full p-2.5 text-md rounded-md drop-shadow-sm bg-[#333560] resize-none focus:outline-0 hover:bg-[#3F4278] transition ease-in-out"
                     placeholder="Note Content"></textarea>
                 <div class="flex flex-row justify-between items-center gap-2.5">
                     <button id="delete-button"
@@ -51,8 +61,6 @@
             </div>
         </section>
     </main>
-    <footer>
-    </footer>
     <script src="core.js"></script>
     <script src="note.js"></script>
 </body>

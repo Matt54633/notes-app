@@ -2,24 +2,15 @@ const login_button = document.getElementById("login-button");
 const email_input = document.getElementById("email-input");
 const password_input = document.getElementById("password-input");
 const sign_up_text = document.getElementById("signup-text");
-const sign_up_link = document.getElementById("signup-link");
+const login_text = document.getElementById("login-text");
 const sign_up_button = document.getElementById("signup-button");
-const cancel_button = document.getElementById("cancel-button");
 
-sign_up_link.addEventListener("click", function () {
-    login_button.classList.add("hidden");
-    sign_up_text.classList.add("hidden");
-    sign_up_link.classList.add("hidden");
-    sign_up_button.classList.remove("hidden");
-    cancel_button.classList.remove("hidden");
+sign_up_text.addEventListener("click", function () {
+    hide_login();
 });
 
-cancel_button.addEventListener("click", function () {
-    login_button.classList.remove("hidden");
-    sign_up_text.classList.remove("hidden");
-    sign_up_link.classList.remove("hidden");
-    sign_up_button.classList.add("hidden");
-    cancel_button.classList.add("hidden");
+login_text.addEventListener("click", function () {
+    hide_signup();
 });
 
 login_button.addEventListener("click", function () {
@@ -51,11 +42,25 @@ async function signup() {
     if (error) {
         alert(error.message);
     } else {
-        login_button.classList.remove("hidden");
-        sign_up_text.classList.remove("hidden");
-        sign_up_link.classList.remove("hidden");
-        sign_up_button.classList.add("hidden");
-        cancel_button.classList.add("hidden");
+        hide_signup();
         alert("Please check your email for a verification link.");
     }
+}
+
+function hide_login() {
+    document.querySelectorAll(".signup_element").forEach(function (element) {
+        element.classList.remove("hidden");
+    });
+    document.querySelectorAll(".login_element").forEach(function (element) {
+        element.classList.add("hidden");
+    });
+}
+
+function hide_signup() {
+    document.querySelectorAll(".signup_element").forEach(function (element) {
+        element.classList.add("hidden");
+    });
+    document.querySelectorAll(".login_element").forEach(function (element) {
+        element.classList.remove("hidden");
+    });
 }

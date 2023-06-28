@@ -20,53 +20,25 @@ let number_of_notes = document.querySelectorAll(".note").length;
 window.addEventListener("load", function () {
     localStorage.removeItem("current_note");
     accent_colour_picker.value = current_accent_colour;
-    document.getElementById('number-of-notes').innerText = `${number_of_notes} note(s)`;
     display_notes();
 });
 
 // settings panel controls
 settings_icon.addEventListener("click", function () {
-    document.getElementById('page-title').innerText = 'Settings';
-    if (plus_icon != null) {
-        plus_icon.classList.add("hidden");
-    }
-    settings_icon.classList.add("hidden");
-    main_content.classList.add("hidden");
-    close_icon.classList.remove("hidden");
-    settings_panel.classList.remove("hidden");
+    hide_main();
 });
 
 close_icon.addEventListener("click", function () {
-    document.getElementById('page-title').innerText = 'Notes';
-    if (plus_icon != null) {
-        plus_icon.classList.remove("hidden");
-    }
-    settings_icon.classList.remove("hidden");
-    main_content.classList.remove("hidden");
-    close_icon.classList.add("hidden");
-    settings_panel.classList.add("hidden");
+    hide_settings();
 });
 
 plus_icon.addEventListener("click", function () {
-    page_title.innerText = "Add Note";
-    settings_icon.classList.add("hidden");
-    search_bar_div.classList.add("hidden");
-    notes_list_container.classList.add("hidden");
-    plus_icon.classList.add("hidden");
-    add_note_form.classList.remove("hidden");
+    display_note_form();
 });
 
 cancel_button.addEventListener("click", function () {
-    page_title.innerText = "Notes";
-    settings_icon.classList.remove("hidden");
-    search_bar_div.classList.remove("hidden");
-    notes_list_container.classList.remove("hidden");
-    plus_icon.classList.remove("hidden");
-    add_note_form.classList.add("hidden");
-    note_title_input.value = "";
-    note_content_input.value = "";
-}
-);
+    hide_note_form();
+});
 
 save_button.addEventListener("click", function () {
     add_note();
@@ -74,12 +46,7 @@ save_button.addEventListener("click", function () {
 
 delete_all_notes_button.addEventListener("click", function () {
     delete_all_notes();
-    settings_panel.classList.add("hidden");
-    close_icon.classList.add("hidden");
-    main_content.classList.remove("hidden");
-    settings_icon.classList.remove("hidden");
-    plus_icon.classList.remove("hidden");
-    document.getElementById('page-title').innerText = 'Notes';
+    hide_settings();
 });
 
 logout_button.addEventListener("click", async function () {
@@ -119,16 +86,9 @@ async function add_note() {
                 { note_title: note_data[0], note_content: note_data[1], user_id: user.id },
             ])
 
-        add_note_form.classList.add("hidden");
-        search_bar_div.classList.remove("hidden");
-        settings_icon.classList.remove("hidden");
-        notes_list_container.classList.remove("hidden");
-        plus_icon.classList.remove("hidden");
-
         note_title_input.value = "";
         note_content_input.value = "";
-        page_title.innerText = "Notes";
-
+        hide_note_form();
         display_notes();
     }
 }
@@ -136,13 +96,11 @@ async function add_note() {
 async function display_notes() {
     notes_list.innerHTML = "";
 
-    // for each note in local storage, create a note
-    const { data, error } = await supabase_client.from('notes').select('*')
+    // for each note, create a note
+    const { data: { user } } = await supabase_client.auth.getUser()
+    const { data, error } = await supabase_client.from('notes').select('*').eq('user_id', user.id)
     let notes = data;
 
-    if (notes == null) {
-        notes = [];
-    }
     notes.forEach(function (note_data) {
         let note = document.createElement("div");
         note.classList.add("note");
@@ -164,7 +122,6 @@ async function display_notes() {
             localStorage.setItem("current_note", JSON.stringify(note_data));
             window.location.href = "note.html";
         });
-
         notes_list.appendChild(note);
     });
 
@@ -205,5 +162,46 @@ async function delete_all_notes() {
         .delete()
         .eq('user_id', user.id)
 
+    document.getElementById('page-title').innerText = 'Notes';
     display_notes();
+}
+
+function hide_settings() {
+    page_title.innerText = "Notes";
+    document.querySelectorAll(".main_element").forEach(function (element) {
+        element.classList.remove("hidden");
+    });
+    document.querySelectorAll(".settings_element").forEach(function (element) {
+        element.classList.add("hidden");
+    });
+}
+
+function hide_main() {
+    page_title.innerText = "Settings";
+    document.querySelectorAll(".main_element").forEach(function (element) {
+        element.classList.add("hidden");
+    });
+    document.querySelectorAll(".settings_element").forEach(function (element) {
+        element.classList.remove("hidden");
+    });
+}
+
+function display_note_form() {
+    page_title.innerText = "Add Note";
+    document.querySelectorAll(".main").forEach(function (element) {
+        element.classList.add("hidden");
+    });
+    plus_icon.classList.add("hidden");
+    settings_icon.classList.add("hidden");
+    add_note_form.classList.remove("hidden");
+}
+
+function hide_note_form() {
+    page_title.innerText = "Notes";
+    document.querySelectorAll(".main").forEach(function (element) {
+        element.classList.remove("hidden");
+    });
+    plus_icon.classList.remove("hidden");
+    settings_icon.classList.remove("hidden");
+    add_note_form.classList.add("hidden");
 }

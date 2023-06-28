@@ -6,7 +6,6 @@ const supabase_client = supabase.createClient(
 
 // add on click to all .icon elements
 const icons = document.querySelectorAll(".icon");
-
 const main_content = document.getElementById("main-content");
 const accent_colour_picker = document.getElementById("accent-colour");
 let current_accent_colour = "";
@@ -20,7 +19,7 @@ window.addEventListener("load", async function () {
     }
     // get current accent colour
     current_accent_colour = localStorage.getItem("accent_colour");
-    if (!window.location.href.includes("login.html") && !window.location.href.includes("note.html")) {
+    if (window.location.href.includes("index.html")) {
         accent_colour_picker.value = current_accent_colour;
     }
 
@@ -54,7 +53,6 @@ icons.forEach(function (icon) {
         icon.style.transform = "scale(1)";
     });
 });
-
 
 function get_accent_colour() {
     document.body.classList.remove(`text-[${current_accent_colour}]`);
