@@ -7,7 +7,8 @@ const back_icon = document.getElementById("back-icon");
 const share_icon = document.getElementById("share-icon");
 const delete_button = document.getElementById("delete-button");
 const save_button = document.getElementById("save-button");
-let light_mode = false;
+const theme_icon = document.getElementById("theme-icon");
+let theme = '';
 
 window.addEventListener("load", function () {
     if (current_note_data == null) {
@@ -15,6 +16,9 @@ window.addEventListener("load", function () {
     }
     note_title_input.value = current_note_data.note_title;
     note_content_input.value = current_note_data.note_content;
+
+    theme = current_note_data.theme;
+    set_note_theme();
 });
 
 // back icon
@@ -24,7 +28,7 @@ back_icon.addEventListener("click", function () {
 
 delete_button.addEventListener("click", function () {
     delete_note();
-});
+}); 
 
 save_button.addEventListener("click", function () {
     save_edited_note();
@@ -33,6 +37,10 @@ save_button.addEventListener("click", function () {
 share_icon.addEventListener("click", function () {
     share_note();
 });
+
+theme_icon.addEventListener("click", function () {
+    set_note_theme(switch_theme = true);
+ });
 
 async function delete_note() {
     const { data: { user } } = await supabase_client.auth.getUser()
@@ -77,18 +85,29 @@ function share_note() {
     }
 }
 
-document.getElementById("light-icon").addEventListener("click", function () {
-    if (!light_mode) {
-        note_title_input.style.backgroundColor = "#eeeeee";
-        note_title_input.style.color = "#1e1b4b";
-        note_content_input.style.backgroundColor = "#eeeeee";
-        note_content_input.style.color = "#1e1b4b";
-        light_mode = true;
-    } else {
+async function set_note_theme(switch_theme) {
+    if (switch_theme == true) {
+        theme = theme == 'dark' ? 'light' : 'dark';
+    } 
+
+    if (theme == 'dark') {
         note_title_input.style.backgroundColor = "#333560";
         note_title_input.style.color = current_accent_colour;
         note_content_input.style.backgroundColor = "#333560";
         note_content_input.style.color = current_accent_colour;
-        light_mode = false;
+    } else {
+        note_title_input.style.backgroundColor = "#eeeeee";
+        note_title_input.style.color = "#1e1b4b";
+        note_content_input.style.backgroundColor = "#eeeeee";
+        note_content_input.style.color = "#1e1b4b";
     }
-});
+
+    const { data: { user } } = await supabase_client.auth.getUser()
+
+    const { data, error } = await supabase_client
+        .from('notes')
+        .update({ theme: theme })
+        .eq('note_content', current_note_data.note_content)
+        .eq('note_title', current_note_data.note_title)
+        .eq('user_id', user.id)
+}

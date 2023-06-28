@@ -98,7 +98,7 @@ async function display_notes() {
 
     // for each note, create a note
     const { data: { user } } = await supabase_client.auth.getUser()
-    const { data, error } = await supabase_client.from('notes').select('*').eq('user_id', user.id)
+    const { data, error } = await supabase_client.from('notes').select('*').eq('user_id', user.id).order('id', { ascending: false })
     let notes = data;
 
     notes.forEach(function (note_data) {
