@@ -83,7 +83,7 @@ async function add_note() {
         const { data, error } = await supabase_client
             .from('notes')
             .insert([
-                { note_title: note_data[0], note_content: note_data[1], user_id: user.id },
+                { note_title: note_data[0], note_content: note_data[1], user_id: user.id, last_edited: new Date().toISOString() },
             ])
 
         note_title_input.value = "";
@@ -98,7 +98,7 @@ async function display_notes() {
 
     // for each note, create a note
     const { data: { user } } = await supabase_client.auth.getUser()
-    const { data, error } = await supabase_client.from('notes').select('*').eq('user_id', user.id).order('id', { ascending: false })
+    const { data, error } = await supabase_client.from('notes').select('*').eq('user_id', user.id).order('last_edited', { ascending: false })
     let notes = data;
 
     notes.forEach(function (note_data) {

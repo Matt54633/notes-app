@@ -60,7 +60,7 @@ async function save_edited_note() {
 
     const { data, error } = await supabase_client
         .from('notes')
-        .update({ note_title: note_title_input.value, note_content: note_content_input.value })
+        .update({ note_title: note_title_input.value, note_content: note_content_input.value, last_edited: new Date().toISOString() })
         .eq('note_content', current_note_data.note_content)
         .eq('note_title', current_note_data.note_title)
         .eq('user_id', user.id)
@@ -106,7 +106,7 @@ async function set_note_theme(switch_theme) {
 
     const { data, error } = await supabase_client
         .from('notes')
-        .update({ theme: theme })
+        .update({ theme: theme, last_edited: new Date().toISOString() })
         .eq('note_content', current_note_data.note_content)
         .eq('note_title', current_note_data.note_title)
         .eq('user_id', user.id)
