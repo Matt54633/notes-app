@@ -4,6 +4,13 @@
   font-family: "Poppins", sans-serif;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: none;
+}
+
 input[type="color"]:first-child {
   border: none;
 }
