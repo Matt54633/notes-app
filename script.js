@@ -21,5 +21,7 @@ require('dotenv').config();
   await page.waitForSelector("#logout-button");
   await page.click("#logout-button");
 
+  await page.waitForSelector("#email-input");
+
   await browser.close();
 })();
